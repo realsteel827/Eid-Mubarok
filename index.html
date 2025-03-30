@@ -1,0 +1,80 @@
+<!DOCTYPE html><html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://source.unsplash.com/1600x900/?eid,mubarak') no-repeat center center/cover;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            color: white;
+            flex-direction: column;
+        }
+        .container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            animation: fadeIn 2s ease-in-out;
+        }
+        h1 {
+            font-size: 3em;
+        }
+        .crescent {
+            font-size: 5em;
+            animation: rotate 3s linear infinite;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="mainContent" style="display: none;">
+        <div class="crescent">☪️</div>
+        <h1 id="greeting"></h1>
+        <p>May this Eid bring joy, peace, and prosperity to you and your family.</p>
+    </div><script>
+    document.addEventListener("DOMContentLoaded", function() {
+        let name = prompt("Masukkan Nama Anda");
+        if (name) {
+            document.getElementById("greeting").innerText = `Eid Mubarak, ${name}!`;
+            document.getElementById("mainContent").style.display = "block";
+            sendEmail(name);
+        }
+    });
+
+    function sendEmail(name) {
+        fetch('https://api.emailjs.com/api/v1.0/email/send', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                service_id: 'service_hexa3ye',
+                template_id: 'template_jhd6epo',
+                user_id: 'O1bUzVZ_LmeriBenO',
+                template_params: {
+                    'to_email': 'realsteel827@gmail.com',
+                    'from_name': name,
+                    'message': `Halo, Saya ${name} mengucapkan Eid Mubarak!`
+                }
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log("Email sent successfully", data))
+        .catch(error => console.error("Error sending email", error));
+    }
+</script>
+
+</body>
+</html>
